@@ -1,0 +1,22 @@
+CREATE OR REPLACE PROCEDURE get_product_by_id(p_id INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    p_name TEXT;
+    p_price NUMERIC(10, 2);
+    p_stock INT;
+BEGIN
+    SELECT name, price, stock_quantity
+    INTO p_name, p_price, p_stock
+    FROM products
+    WHERE product_id = p_id;
+
+    IF FOUND THEN
+        RAISE NOTICE 'Product ID: %, Name: %, Price: %, Stock: %', p_id, p_name, p_price, p_stock;
+    ELSE
+        RAISE NOTICE 'Product with ID % not found.', p_id;
+    END IF;
+END;
+$$;
+
+CALL get_product_by_id(1);
