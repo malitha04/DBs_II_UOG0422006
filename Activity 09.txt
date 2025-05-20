@@ -1,0 +1,30 @@
+CREATE OR REPLACE PROCEDURE check_stock_category(p_id INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    stock_qty INT;
+    stock_category TEXT;
+BEGIN
+    SELECT stock_quantity
+    INTO stock_qty
+    FROM products
+    WHERE product_id = p_id;
+
+    IF NOT FOUND THEN
+        RAISE NOTICE 'Product with ID % not found.', p_id;
+        RETURN;
+    END IF;
+
+    stock_category := CASE
+        WHEN stock_qty < 10 THEN 'Low Stock'
+        WHEN stock_qty BETWEEN 10 AND 50 THEN 'Moderate Stock'
+        WHEN stock_qty > 50 THEN 'High Stock'
+        ELSE 'Unknown Stock Level'
+    END;
+
+    RAISE NOTICE 'Product ID %: %', p_id, stock_category;
+END;
+$$;
+
+
+CALL check_stock_category(1);
