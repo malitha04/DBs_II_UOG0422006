@@ -1,0 +1,16 @@
+CREATE OR REPLACE PROCEDURE double_value(INOUT salary numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    salary := salary * 2;
+END;
+$$;
+
+DO $$
+DECLARE
+    my_salary numeric := 25000;
+BEGIN
+    CALL double_value(my_salary);
+    RAISE NOTICE 'Doubled Salary: %', my_salary;
+END;
+$$;
