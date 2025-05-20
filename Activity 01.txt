@@ -1,0 +1,10 @@
+CREATE OR REPLACE PROCEDURE add_numbers(num1 numeric, num2 numeric)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    result numeric;
+BEGIN
+    result := num1 + num2;
+    RAISE NOTICE 'The sum of % and % is %', num1, num2, result;
+END;
+$$;
