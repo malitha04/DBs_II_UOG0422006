@@ -1,0 +1,18 @@
+CREATE DATABASE ABXCompany;
+
+\c ABXCompany
+
+-- Create a table
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    name TEXT,
+    price NUMERIC(10, 2),
+    stock_quantity INT
+);
+
+-Insert data-
+INSERT INTO products(name, price, stock_quantity)
+VALUES ('Laptop', 1200.00, 10);
+
+-Query data-
+SELECT * FROM products;
