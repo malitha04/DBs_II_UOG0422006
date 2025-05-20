@@ -1,0 +1,17 @@
+CREATE OR REPLACE PROCEDURE update_product_stock(p_id INT, new_stock INT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE products
+    SET stock_quantity = new_stock
+    WHERE product_id = p_id;
+
+    IF FOUND THEN
+        RAISE NOTICE 'Stock updated for product ID % to %', p_id, new_stock;
+    ELSE
+        RAISE NOTICE 'Product with ID % not found. No update performed.', p_id;
+    END IF;
+END;
+$$;
+
+CALL update_product_stock(1, 50);
