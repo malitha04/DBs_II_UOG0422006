@@ -1,0 +1,17 @@
+CREATE OR REPLACE PROCEDURE delete_product(p_id INT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    DELETE FROM products
+    WHERE product_id = p_id;
+
+    IF FOUND THEN
+        RAISE NOTICE 'Product with ID % has been deleted.', p_id;
+    ELSE
+        RAISE NOTICE 'Product with ID % not found. Nothing deleted.', p_id;
+    END IF;
+END;
+$$;
+
+
+CALL delete_product(3);
